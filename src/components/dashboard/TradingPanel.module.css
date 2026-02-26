@@ -1,0 +1,103 @@
+.panel {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 280px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.symbol {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--foreground);
+    margin: 0;
+}
+
+.price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--primary-main);
+    font-weight: 600;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputGroup label {
+    font-size: 0.875rem;
+    color: var(--foreground-muted);
+}
+
+.sizeSelector {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.sizeSelector button {
+    background: none;
+    border: none;
+    color: var(--foreground);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.2s;
+}
+
+.sizeSelector button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sizeSelector input {
+    background: none;
+    border: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--foreground);
+    text-align: center;
+    padding: 0.5rem;
+    width: 80px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.sellBtn,
+.buyBtn {
+    flex: 1;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+}
+
+.sellBtn {
+    background: #ef4444 !important;
+}
+
+.sellBtn:hover {
+    background: #dc2626 !important;
+}
+
+.buyBtn {
+    background: #22c55e !important;
+}
+
+.buyBtn:hover {
+    background: #16a34a !important;
+}

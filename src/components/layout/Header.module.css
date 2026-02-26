@@ -1,0 +1,59 @@
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 0;
+    background: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+    letter-spacing: -0.05em;
+    text-decoration: none;
+    background: linear-gradient(to right, var(--foreground), #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.navLinks {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+.navLinks a {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+}
+
+.navLinks a:hover {
+    color: var(--primary);
+}
+
+.authButtons {
+    display: flex;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .navLinks {
+        display: none;
+    }
+}

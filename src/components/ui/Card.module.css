@@ -1,0 +1,31 @@
+.card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.default {
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.bordered {
+    background: transparent;
+    border: 1px solid var(--border);
+}
+
+.bordered:hover {
+    border-color: var(--primary);
+}

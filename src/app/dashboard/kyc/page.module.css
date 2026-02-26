@@ -1,0 +1,119 @@
+.container {
+    max-width: 800px;
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: #94a3b8;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+}
+
+.grid {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.uploadCard {
+    position: relative;
+    padding: 2rem;
+}
+
+.stepBadge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+}
+
+.uploadCard h3 {
+    margin-bottom: 0.25rem;
+    color: var(--foreground);
+}
+
+.uploadCard p {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.dropzone {
+    border: 2px dashed var(--border);
+    border-radius: 0.75rem;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dropzone:hover {
+    border-color: var(--primary);
+    background: rgba(59, 130, 246, 0.02);
+}
+
+.uploadIcon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.uploadText {
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+}
+
+.uploadText span {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.supported {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.successCard {
+    text-align: center;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.successIcon {
+    font-size: 4rem;
+}
+
+.successCard h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.successCard p {
+    color: #94a3b8;
+    max-width: 500px;
+    margin-bottom: 2rem;
+}
+
+.fileName {
+    color: var(--primary) !important;
+    word-break: break-all;
+}

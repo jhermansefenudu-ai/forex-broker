@@ -1,0 +1,135 @@
+.container {
+    max-width: 800px;
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1.125rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.methodsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.methodCard {
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s;
+    padding: 0 !important;
+}
+
+.methodClickArea {
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.methodCard:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.selected {
+    border-color: var(--primary);
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+.methodName {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+}
+
+.methodDetails {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.amountCard {
+    padding: 2rem;
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s;
+}
+
+.inputWrapper:focus-within {
+    border-color: var(--primary);
+}
+
+.currency {
+    font-size: 2rem;
+    color: #64748b;
+    margin-right: 0.5rem;
+}
+
+.amountInput {
+    background: transparent;
+    border: none;
+    font-size: 2.5rem;
+    color: var(--foreground);
+    width: 100%;
+    outline: none;
+    font-weight: 700;
+}
+
+.amountInput::placeholder {
+    color: #334155;
+}
+
+.quickAmounts {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.quickBtn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quickBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--foreground);
+}
+
+.confirmBtn {
+    margin-bottom: 1rem;
+}
+
+.secureNote {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #10b981;
+    /* Green for security/trust */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}

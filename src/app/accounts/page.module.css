@@ -1,0 +1,78 @@
+.main {
+    min-height: 100vh;
+    padding-top: 5rem;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+}
+
+.hero {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.125rem;
+    line-height: 1.6;
+}
+
+.comparison {
+    padding-bottom: 5rem;
+}
+
+.tableContainer {
+    overflow-x: auto;
+    border-radius: 1rem;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+    /* Ensure scrolling on mobile */
+}
+
+.table th,
+.table td {
+    padding: 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+}
+
+.table th {
+    font-weight: 600;
+    color: var(--foreground);
+    font-size: 1.1rem;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.highlight {
+    background: rgba(59, 130, 246, 0.05);
+    position: relative;
+}
+
+.table th.highlight {
+    color: var(--primary);
+    border-top: 2px solid var(--primary);
+}
+
+.table td.highlight {
+    font-weight: 500;
+    color: #fff;
+}

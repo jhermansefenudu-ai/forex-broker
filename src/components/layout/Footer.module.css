@@ -1,0 +1,72 @@
+.footer {
+    background: #020617;
+    border-top: 1px solid var(--border);
+    padding: 4rem 0 3rem;
+    /* Extra padding bottom for fixed ticker */
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.topSection {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    color: #64748b;
+}
+
+.links {
+    display: flex;
+    gap: 4rem;
+}
+
+.column h4 {
+    color: var(--foreground);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.column a {
+    display: block;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+}
+
+.column a:hover {
+    color: var(--primary);
+}
+
+.compliance {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.compliance p {
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #64748b;
+}
+
+.compliance strong {
+    color: #ef4444;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #475569;
+}
