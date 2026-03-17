@@ -1,0 +1,16 @@
+.main {
+    padding-top: 6rem;
+    min-height: 100vh;
+    background: var(--background);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding-top: 5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

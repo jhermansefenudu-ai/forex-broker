@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './Ticker.module.css';
 
 interface Quote {
@@ -10,6 +10,8 @@ interface Quote {
 
 export const Ticker: React.FC = () => {
     const [quotes, setQuotes] = useState<Quote[]>([]);
+    const prevQuotesRef = useRef<Record<string, string>>({});
+    const [flashState, setFlashState] = useState<Record<string, 'up' | 'down' | null>>({});
 
     useEffect(() => {
         const fetchQuotes = async () => {
@@ -17,7 +19,18 @@ export const Ticker: React.FC = () => {
                 const res = await fetch('/api/market/ticker');
                 const data = await res.json();
                 if (data.success) {
+                    const newFlash: Record<string, 'up' | 'down' | null> = {};
+                    data.quotes.forEach((q: Quote) => {
+                        const prev = parseFloat(prevQuotesRef.current[q.symbol] || q.bid);
+                        const curr = parseFloat(q.bid);
+                        if (curr > prev) newFlash[q.symbol] = 'up';
+                        else if (curr < prev) newFlash[q.symbol] = 'down';
+                        prevQuotesRef.current[q.symbol] = q.bid;
+                    });
+                    setFlashState(newFlash);
                     setQuotes(data.quotes);
+
+                    setTimeout(() => setFlashState({}), 800);
                 }
             } catch {
                 console.error('Failed to fetch ticker data');
@@ -25,7 +38,7 @@ export const Ticker: React.FC = () => {
         };
 
         fetchQuotes();
-        const interval = setInterval(fetchQuotes, 3000); // Update every 3 seconds
+        const interval = setInterval(fetchQuotes, 3000);
         return () => clearInterval(interval);
     }, []);
 
@@ -34,14 +47,24 @@ export const Ticker: React.FC = () => {
     return (
         <div className={styles.tickerContainer}>
             <div className={styles.tickerTrack}>
-                {[...quotes, ...quotes, ...quotes].map((quote, index) => (
-                    <div key={`${quote.symbol}-${index}`} className={styles.tickerItem}>
-                        <span className={styles.symbol}>{quote.symbol}</span>
-                        <span className={styles.bid}>{quote.bid}</span>
-                        <span className={styles.spread}>/</span>
-                        <span className={styles.ask}>{quote.ask}</span>
-                    </div>
-                ))}
+                {[...quotes, ...quotes, ...quotes, ...quotes].map((quote, index) => {
+                    const flash = flashState[quote.symbol];
+                    return (
+                        <div key={`${quote.symbol}-${index}`} className={`${styles.tickerItem} ${flash ? styles[flash] : ''}`}>
+                            <span className={styles.symbol}>{quote.symbol}</span>
+                            <span className={styles.price}>
+                                <span className={styles.bid}>{quote.bid}</span>
+                                <span className={styles.separator}>/</span>
+                                <span className={styles.ask}>{quote.ask}</span>
+                            </span>
+                            {flash && (
+                                <span className={styles.indicator}>
+                                    {flash === 'up' ? '▲' : '▼'}
+                                </span>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

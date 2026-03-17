@@ -1,25 +1,29 @@
 .main {
     min-height: 100vh;
     padding-top: 5rem;
-    background-image: radial-gradient(circle at 50% 10%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
 }
 
 .hero {
-    padding: 4rem 0;
+    padding: 6rem 0 3rem;
     text-align: center;
 }
 
 .title {
     font-size: 3.5rem;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    background: linear-gradient(to right, var(--foreground), #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .subtitle {
     color: #94a3b8;
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto 2.5rem;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     line-height: 1.6;
 }
 
@@ -36,11 +40,14 @@
 
 .traderContainer {
     padding: 0 !important;
-    /* Override standard card padding */
     overflow: hidden;
     height: 600px;
     display: flex;
     flex-direction: column;
+    background: rgba(15, 23, 42, 0.4) !important;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5);
 }
 
 .iframeHeader {
@@ -126,15 +133,28 @@
 }
 
 .featureItem {
-    background: transparent;
-    border: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.2) !important;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 2.5rem !important;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.featureItem:hover {
+    transform: translateY(-5px);
+    border-color: rgba(59, 130, 246, 0.2) !important;
 }
 
 .featureItem h3 {
     color: var(--primary);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
 }
 
 .featureItem p {
     color: #94a3b8;
+    line-height: 1.6;
 }

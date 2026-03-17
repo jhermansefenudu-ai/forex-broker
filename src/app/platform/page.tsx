@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
@@ -63,7 +62,6 @@ export default function Platform() {
 
     return (
         <main className={styles.main}>
-            <Header />
 
             <section className={styles.hero}>
                 <div className="container">
@@ -97,7 +95,7 @@ export default function Platform() {
                                 <span className={styles.iframeTitle}>EUR/USD - 1D Live</span>
                             </div>
                             <div className={styles.chartWrapper}>
-                                <Chart data={chartData} />
+                                <Chart data={chartData} symbol="EURUSD" />
                             </div>
                         </Card>
                     </MotionWrapper>

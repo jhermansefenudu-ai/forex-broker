@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Card } from "@/components/ui/Card";
 import { createClient } from "@/lib/supabase";
 import styles from "../page.module.css";
@@ -45,11 +45,40 @@ export default function TradeHistory() {
         fetchHistory();
     }, [supabase]);
 
+    const metrics = useMemo(() => {
+        if (trades.length === 0) return { winRate: 0, totalPnL: 0, bestTrade: 0 };
+        const wins = trades.filter(t => t.pnl > 0).length;
+        const totalPnL = trades.reduce((sum, t) => sum + (t.pnl || 0), 0);
+        const bestTrade = Math.max(...trades.map(t => t.pnl || 0));
+        return {
+            winRate: (wins / trades.length) * 100,
+            totalPnL,
+            bestTrade
+        };
+    }, [trades]);
+
     if (isLoading) return <div className={styles.loading}>Loading history...</div>;
 
     return (
         <div className={styles.dashboard}>
-            <h2 className={styles.sectionTitle}>Trade History</h2>
+            <div className={styles.headerRow}>
+                <h2 className={styles.sectionTitle}>Trade History</h2>
+                <div className={styles.historyMetrics}>
+                    <div className={styles.metric}>
+                        <span className={styles.metricLabel}>Win Rate</span>
+                        <span className={`${styles.metricValue} ${metrics.winRate >= 50 ? styles.positive : styles.negative}`}>
+                            {metrics.winRate.toFixed(1)}%
+                        </span>
+                    </div>
+                    <div className={styles.metric}>
+                        <span className={styles.metricLabel}>Total PnL</span>
+                        <span className={`${styles.metricValue} ${metrics.totalPnL >= 0 ? styles.positive : styles.negative}`}>
+                            ${metrics.totalPnL.toFixed(2)}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <Card variant="default" className={styles.activityTable}>
                 <div className={styles.tableHeader}>
                     <span>Date</span>

@@ -4,10 +4,12 @@ import React, { useState, useRef } from 'react';
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase";
+import { useNotification } from "@/components/ui/NotificationProvider";
 import styles from "./page.module.css";
 
 export default function KYC() {
     const supabase = createClient();
+    const { showToast } = useNotification();
     const [status, setStatus] = useState<'idle' | 'uploading' | 'submitted'>('idle');
     const [files, setFiles] = useState<{ id?: string; address?: string }>({});
     const [uploadingType, setUploadingType] = useState<'id' | 'address' | null>(null);
@@ -40,7 +42,7 @@ export default function KYC() {
             setFiles(prev => ({ ...prev, [type]: publicUrl }));
         } catch (error: unknown) {
             console.error('Upload error:', error);
-            alert("Upload failed. Please try again.");
+            showToast("Upload failed. Please try again.", "error");
         } finally {
             setUploadingType(null);
         }
@@ -48,7 +50,7 @@ export default function KYC() {
 
     const handleSubmit = async () => {
         if (!files.id || !files.address) {
-            alert("Please upload both Proof of Identity and Proof of Address.");
+            showToast("Please upload both Proof of Identity and Proof of Address.", "warning");
             return;
         }
         setStatus('uploading');
@@ -70,7 +72,7 @@ export default function KYC() {
             setStatus('submitted');
         } catch (error: unknown) {
             console.error('Submission error:', error);
-            alert("Submission failed. Please try again.");
+            showToast("Submission failed. Please try again.", "error");
             setStatus('idle');
         }
     };

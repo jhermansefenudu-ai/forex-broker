@@ -1,9 +1,53 @@
+"use client";
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
+import { createClient } from "@/lib/supabase";
+import { useNotification } from "@/components/ui/NotificationProvider";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const router = useRouter();
+  const supabase = createClient();
+  const { showToast } = useNotification();
+  const [isDemoLoading, setIsDemoLoading] = useState(false);
+
+  const handleTryDemo = async () => {
+    setIsDemoLoading(true);
+    try {
+      // Generate random demo credentials
+      const randomId = Math.random().toString(36).substring(2, 10);
+      const email = `demo_${randomId}@primetrade.io`;
+      const password = `demoP@ssword${randomId}`;
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: `Demo User ${randomId}`,
+            is_demo: true
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        // Redirect to dashboard
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      console.error('Demo account creation failed:', error);
+      showToast("Failed to create demo account. Please try again.", 'error');
+    } finally {
+      setIsDemoLoading(false);
+    }
+  };
+
   return (
     <main className={styles.main}>
       <section className={styles.hero}>
@@ -22,8 +66,17 @@ export default function Home() {
             </MotionWrapper>
             <MotionWrapper direction="up" delay={0.5}>
               <div className={styles.ctaGroup}>
-                <Button variant="primary" size="lg">Start Trading</Button>
-                <Button variant="glass" size="lg">Try Demo</Button>
+                <Button variant="primary" size="lg" onClick={() => router.push('/register')}>
+                  Start Trading
+                </Button>
+                <Button
+                  variant="glass"
+                  size="lg"
+                  onClick={handleTryDemo}
+                  disabled={isDemoLoading}
+                >
+                  {isDemoLoading ? 'Creating Demo...' : 'Try Demo'}
+                </Button>
               </div>
             </MotionWrapper>
           </div>

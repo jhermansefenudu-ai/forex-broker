@@ -1,16 +1,17 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/Button";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
 import { createClient } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
+import { useNotification } from "@/components/ui/NotificationProvider";
 import styles from "./page.module.css";
 
 export default function AccountTypes() {
     const supabase = createClient();
     const router = useRouter();
+    const { showToast } = useNotification();
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -57,11 +58,11 @@ export default function AccountTypes() {
                 if (error) throw error;
             }
 
-            alert(`Successfully switched to ${type.toUpperCase()} account!`);
+            showToast(`Successfully switched to ${type.toUpperCase()} account!`, 'success');
             router.push('/dashboard');
         } catch (error) {
             console.error("Account error:", error);
-            alert("Failed to update account type. Please try again.");
+            showToast("Failed to update account type. Please try again.", 'error');
         } finally {
             setIsLoading(false);
         }
@@ -69,7 +70,6 @@ export default function AccountTypes() {
 
     return (
         <main className={styles.main}>
-            <Header />
 
             <section className={styles.hero}>
                 <div className="container">

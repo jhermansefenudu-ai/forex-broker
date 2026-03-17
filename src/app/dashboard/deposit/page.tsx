@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase";
+import { useNotification } from "@/components/ui/NotificationProvider";
 import styles from "./page.module.css";
 
 export default function Deposit() {
@@ -12,6 +13,7 @@ export default function Deposit() {
     const [selectedMethod, setSelectedMethod] = useState<string | null>('card');
     const [amount, setAmount] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const { showToast } = useNotification();
     const [accountId, setAccountId] = useState<string | null>(null);
     const [currentBalance, setCurrentBalance] = useState(0);
 
@@ -36,12 +38,12 @@ export default function Deposit() {
 
     const handleDeposit = async () => {
         if (!amount || Number(amount) <= 0) {
-            alert("Please enter a valid amount");
+            showToast("Please enter a valid amount", "warning");
             return;
         }
 
         if (!accountId) {
-            alert("Account not found. Please contact support.");
+            showToast("Account not found. Please contact support.", "error");
             return;
         }
 
@@ -74,11 +76,11 @@ export default function Deposit() {
 
             if (accError) throw accError;
 
-            alert("Deposit successful!");
+            showToast("Deposit successful!", "success");
             router.push("/dashboard");
         } catch (error) {
             console.error("Deposit error:", error);
-            alert("Deposit failed. Please try again.");
+            showToast("Deposit failed. Please try again.", "error");
         } finally {
             setIsLoading(false);
         }

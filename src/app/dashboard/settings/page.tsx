@@ -5,10 +5,12 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
+import { useNotification } from "@/components/ui/NotificationProvider";
 import styles from "../page.module.css";
 
 export default function SettingsPage() {
     const supabase = createClient();
+    const { showToast } = useNotification();
     const [user, setUser] = useState<User | null>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +29,7 @@ export default function SettingsPage() {
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsEditing(false);
         setIsLoading(false);
-        alert("Settings updated successfully.");
+        showToast("Settings updated successfully.", "success");
     };
 
     return (

@@ -4,18 +4,38 @@ import React, { useState } from 'react';
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { createClient } from "@/lib/supabase";
+import { useNotification } from "@/components/ui/NotificationProvider";
 import styles from "../page.module.css";
 
 export default function WithdrawPage() {
     const supabase = createClient();
+    const { showToast } = useNotification();
     const [amount, setAmount] = useState('');
     const [method, setMethod] = useState('bank');
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [kycStatus, setKycStatus] = useState<'not_started' | 'pending' | 'verified' | 'rejected'>('not_started');
+    const [isFetchingKyc, setIsFetchingKyc] = useState(true);
+
+    React.useEffect(() => {
+        async function checkKyc() {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('kyc_status')
+                    .eq('id', user.id)
+                    .single();
+                if (profile) setKycStatus(profile.kyc_status);
+            }
+            setIsFetchingKyc(false);
+        }
+        checkKyc();
+    }, [supabase]);
 
     const handleWithdraw = async () => {
         if (!amount || Number(amount) < 50) {
-            alert("Please enter an amount of at least $50.");
+            showToast("Please enter an amount of at least $50.", "warning");
             return;
         }
 
@@ -37,7 +57,7 @@ export default function WithdrawPage() {
             setSuccess(true);
         } catch (error) {
             console.error('Withdrawal error:', error);
-            alert("Failed to submit withdrawal request.");
+            showToast("Failed to submit withdrawal request.", "error");
         } finally {
             setIsLoading(false);
         }
@@ -107,10 +127,16 @@ export default function WithdrawPage() {
                         size="lg"
                         fullWidth
                         onClick={handleWithdraw}
-                        disabled={isLoading}
+                        disabled={isLoading || kycStatus !== 'verified' || isFetchingKyc}
                     >
-                        {isLoading ? 'Processing...' : 'Request Withdrawal'}
+                        {isFetchingKyc ? 'Checking Status...' : isLoading ? 'Processing...' : kycStatus === 'verified' ? 'Request Withdrawal' : 'Verification Required'}
                     </Button>
+
+                    {kycStatus !== 'verified' && !isFetchingKyc && (
+                        <p style={{ fontSize: '0.85rem', color: '#ef4444', textAlign: 'center', background: 'rgba(239, 68, 68, 0.1)', padding: '0.75rem', borderRadius: '8px' }}>
+                            <strong>Withdrawal Locked:</strong> You must complete KYC verification before you can withdraw funds.
+                        </p>
+                    )}
 
                     <p style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', textAlign: 'center' }}>
                         Withdrawals are typically processed within 24-48 hours.

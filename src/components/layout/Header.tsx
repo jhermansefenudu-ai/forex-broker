@@ -5,13 +5,36 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { createClient } from '@/lib/supabase';
 import { User } from '@supabase/supabase-js';
+import { useRealtime } from '@/hooks/useRealtime';
+import { useNotification } from '@/components/ui/NotificationProvider';
 import styles from './Header.module.css';
 
 export const Header: React.FC = () => {
     const supabase = createClient();
     const router = useRouter();
+    const { showToast } = useNotification();
     const [user, setUser] = useState<User | null>(null);
     const [role, setRole] = useState<'user' | 'admin'>('user');
+
+
+    useRealtime(user?.id, (payload) => {
+        if (payload.type === 'profile') {
+            const status = payload.data.kyc_status;
+            if (status === 'verified') {
+                showToast("Your account has been verified!", 'success');
+            } else if (status === 'rejected') {
+                showToast("Your KYC verification was rejected. Please check your documents.", 'error');
+            }
+        } else if (payload.type === 'transaction') {
+            const status = payload.data.status;
+            const amount = Math.abs(payload.data.amount);
+            if (status === 'completed') {
+                showToast(`Your withdrawal of $${amount.toLocaleString()} was approved.`, 'success');
+            } else if (status === 'failed') {
+                showToast(`Your withdrawal of $${amount.toLocaleString()} failed.`, 'error');
+            }
+        }
+    });
 
     useEffect(() => {
         async function getSession() {
